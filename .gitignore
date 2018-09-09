@@ -7,4 +7,7 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
+<<<<<<< HEAD
 cmake-build-debug
+=======
+>>>>>>> 08e51bf1f35e63a70f6276b65f5db468d0d4f5df
