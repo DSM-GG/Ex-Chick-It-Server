@@ -6,7 +6,7 @@
 #define WSL_PACKET_H
 
 #include <boost/asio.hpp>
-#include "../core/memorystream.h"
+#include "core/memorystream.h"
 
 using namespace boost::asio::ip;
 
@@ -43,27 +43,10 @@ public:
     Packet(tcp::socket& socket) : m_socket(&socket) {
         switch (m_packetType) {
         case LOGIN_PACKET:
-            // Get ID and PW as hash value
-            // so account values are statical
-
-            // Hash -> MD5 ( || Something)
-            // ID 4 byte / PW 4 byte
-
-            // one more hashing with salt
-
-            // TODO: Make DB Connection and SELECT
-
-            break;
-
         case REGISTER_PACKET:
-            // Get ID and PW as hash value
-            // Hash -> MD5 ( || Another Something)
-            // ID 4 byte / PW 4 byte
-
-            // one more hashing with salt
-
-            // TODO: Make DB Connection and INSERT
-
+            // Account Structure
+            m_buffer = new char[8];
+            socket.receive(this, 9);
             break;
 
         default:
@@ -71,9 +54,12 @@ public:
         }
     }
 
+    ~Packet() {
+        m_socket->close();
+    }
+
     inline PacketType GetPacketType() const { return m_packetType; }
     inline tcp::socket& GetSocket() { return *m_socket; }
-    inline void Close() const { m_socket->close(); }
     inline void* GetBuffer() const { return m_buffer; }
 
 private:
