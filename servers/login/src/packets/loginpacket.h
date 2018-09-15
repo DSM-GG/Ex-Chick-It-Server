@@ -10,16 +10,8 @@
 
 class LoginPacket : public Packet {
 public:
-    struct LoginData {
-        uint32_t id;
-        uint32_t pw;
-    };
-
-    uint32_t& GetId() { return GetData().id; }
-    uint32_t& GetPw() { return GetData().pw; }
-
-private:
-    inline LoginData& GetData() { return *reinterpret_cast<LoginData*>(GetBuffer()); }
+    uint32_t& GetId() { return GetDataAsAccountData().id; }
+    uint32_t& GetPw() { return GetDataAsAccountData().pw; }
 };
 
 #endif //WSL_LOGINPACKET_H

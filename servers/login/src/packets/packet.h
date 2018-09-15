@@ -40,18 +40,28 @@ enum Type : uint8_t {
 
 class Packet {
 public:
-    Packet(tcp::socket& socket) : m_socket(&socket) {
-        // Account Structure
-        m_buffer = new char[8];
-        socket.receive(this, 9);
+    struct ArtoriaPacketData {
+        PacketType packetType;
+        char data[8];
+    };
 
-        switch (m_packetType) {
+    struct ArtoriaAccountPacketData {
+        PacketType packetType;
+        uint32_t id, pw;
+    };
+
+    Packet(tcp::socket& socket) : m_socket(&socket) {
+        socket.receive(boost::asio::buffer(&m_data, sizeof(ArtoriaPacketData)));
+
+        PacketType& packetType = m_data.packetType;
+
+        switch (packetType) {
         case LOGIN_PACKET:
         case REGISTER_PACKET:
             break;
 
         default:
-            m_packetType = WRONG_PACKET;
+            packetType = WRONG_PACKET;
             break;
         }
     }
@@ -60,14 +70,17 @@ public:
         m_socket->close();
     }
 
-    inline PacketType GetPacketType() const { return m_packetType; }
+    inline PacketType GetPacketType() const { return m_data.packetType; }
     inline tcp::socket& GetSocket() { return *m_socket; }
-    inline void* GetBuffer() const { return m_buffer; }
+
+    template <typename T>
+    inline T& GetDataAs() const { return *(T*)(&m_data); }
+
+    inline struct ArtoriaAccountPacketData& GetDataAsAccountData() const { return GetDataAs<ArtoriaAccountPacketData>(); }
 
 private:
     tcp::socket* m_socket;
-    PacketType m_packetType;
-    void* m_buffer;
+    struct ArtoriaPacketData m_data;
 };
 
 #endif //WSL_PACKET_H
