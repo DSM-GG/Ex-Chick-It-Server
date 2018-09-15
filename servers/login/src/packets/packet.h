@@ -17,40 +17,42 @@ enum Type : uint8_t {
     // ERROR CASE
     WRONG_PACKET,
 
-    // LoginServer => Artoria
+    // LoginServer
     LOGIN_PACKET,
     REGISTER_PACKET,
-    ARTORIA_RESPONSE_PACKET,
-
-    // LobbyServer for Lobby and MatchMaking => Matcher
-    GET_VAR_PACKET, // With Arg Enum
-    MATCH_MAKING_REQUEST_PACKET,
-    MATCH_MAKING_RESPONSE_PACKET,
-
-    // LogicServer => Logic, Docker
-    UPDATE_VAR_PACKET, // With Enum Arg
-    ACTION_PACKET, // With Enum Arg
-
-    // LogicServer To LobbyServer
-    GAME_END_PACKET,
-
-    // LobbyServer To LogicServer
-    GAME_START_PACKET,
+    RESPONSE_PACKET,
+//
+//    // LobbyServer for Lobby and MatchMaking => Matcher
+//    GET_VAR_PACKET, // With Arg Enum
+//    MATCH_MAKING_REQUEST_PACKET,
+//    MATCH_MAKING_RESPONSE_PACKET,
+//
+//    // LogicServer => Logic, Docker
+//    UPDATE_VAR_PACKET, // With Enum Arg
+//    ACTION_PACKET, // With Enum Arg
+//
+//    // LogicServer To LobbyServer
+//    GAME_END_PACKET,
+//
+//    // LobbyServer To LogicServer
+//    GAME_START_PACKET,
 };
 
 class Packet {
 public:
     Packet(tcp::socket& socket) : m_socket(&socket) {
+        // Account Structure
+        m_buffer = new char[8];
+        socket.receive(this, 9);
+
         switch (m_packetType) {
         case LOGIN_PACKET:
         case REGISTER_PACKET:
-            // Account Structure
-            m_buffer = new char[8];
-            socket.receive(this, 9);
             break;
 
         default:
             m_packetType = WRONG_PACKET;
+            break;
         }
     }
 
