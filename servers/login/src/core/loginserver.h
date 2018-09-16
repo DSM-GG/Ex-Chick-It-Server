@@ -23,7 +23,7 @@ using boost::asio::ip::tcp;
 
 class LoginServer : private ServerBase {
 public:
-    LoginServer(const uint16_t &port) : ServerBase(port), m_mySql("localhost", "moreal", "moreal0326!") { }
+    LoginServer(const uint16_t &port) : ServerBase(port), m_mySql("0.0.0.0", "root", "1234", "account") { }
 
     void StartServer();
 
@@ -45,9 +45,16 @@ private:
         }
     }
 
+    // Main Functions
     bool Login(LoginPacket&);
     bool Register(RegisterPacket&);
 
+    // Utility
+    bool ExistAccount(const std::string&, const std::string&);
+    bool ExistAccount(const std::string&);
+    std::string GetInitializeQuery() const;
+
+    // Interface, Abstracted
     virtual void IOThread() override;
     virtual void WorkerThread() override;
 

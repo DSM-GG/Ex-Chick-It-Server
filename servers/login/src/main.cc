@@ -5,9 +5,9 @@
 #include <iostream>
 #include <thread>
 
-#include <core/loginserver.h>
+#include "core/loginserver.h"
 #include <base64.h>
-#include "MySql.hpp"
+#include "core/loginserver.h"
 
 int main() {
     LoginServer server(4000);
