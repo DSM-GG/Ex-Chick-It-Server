@@ -16,16 +16,12 @@ include_directories(
 
 add_executable(LoginServer
         src/packets/packet.h
-        src/core/memorystream.cc
-        src/core/memorystream.h
         src/core/loginserver.cc
         src/core/loginserver.h
         src/main.cc
         src/core/serverbase.h
-        src/core/io_service_pool.cc
-        src/core/io_service_pool.h
         src/packets/loginpacket.h
-        src/packets/registerpacket.h)
+        src/packets/registerpacket.h src/core/util.cc src/core/util.h)
 
 target_link_libraries(LoginServer
         ${CMAKE_THREAD_LIBS_INIT}

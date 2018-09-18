@@ -6,9 +6,8 @@
 #define PROJECT_UTIL_H
 
 
-class util {
-
+class HashUtil {
+    // TODO: Implements Hash Algorithm
 };
-
 
 #endif //PROJECT_UTIL_H
