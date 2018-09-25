@@ -12,16 +12,15 @@ find_package(Boost REQUIRED COMPONENTS system filesystem)
 
 include_directories(
         src
-        ../../lib/base64)
+        ../../lib/base64
+        ../../lib/common)
+
+file(GLOB_RECURSE SOURCES . "*.cc")
+file(GLOB_RECURSE HEADERS . "*.h")
 
 add_executable(LoginServer
-        src/packets/packet.h
-        src/core/loginserver.cc
-        src/core/loginserver.h
-        src/main.cc
-        src/core/serverbase.h
-        src/packets/loginpacket.h
-        src/packets/registerpacket.h src/core/util.cc src/core/util.h)
+        ${SOURCES}
+        ${HEADERS})
 
 target_link_libraries(LoginServer
         ${CMAKE_THREAD_LIBS_INIT}

@@ -7,27 +7,30 @@
 
 #include <boost/asio.hpp>
 
-#include <iostream>
 #include <thread>
 #include <string>
 #include <queue>
 #include <mutex>
 
-#include <MySql.hpp>
-
 #include <packets/loginpacket.h>
 #include <packets/registerpacket.h>
+
 #include <core/serverbase.h>
 
 using boost::asio::ip::tcp;
 
-class LoginServer : private ServerBase {
+class GamePlayServer : private ServerBase {
 public:
-    LoginServer(const uint16_t &port)
-    : ServerBase(port),
-      m_mySql("0.0.0.0", "root", "1234") {
-
-    }
+    // 플레이 서버
+    // 공격
+    /*
+     * 액션 목록
+     * ---------
+     * 공격 (총)
+     * 이동
+     * ㅌ
+     */
+    GamePlayServer(const uint16_t &port) : ServerBase(port) { }
 
     void StartServer();
 
@@ -35,7 +38,7 @@ private:
 
     inline void HandlePacket(Packet& packet) {
         switch (packet.GetPacketType()) {
-        case LOGIN_PACKET:
+        case Packet:
             Login(*reinterpret_cast<LoginPacket*>(&packet));
             break;
 
@@ -44,19 +47,20 @@ private:
             break;
 
         default:
-            std::clog << "Wrong Packet\n";
+            packet.SetPacketType(WRONG_PACKET);
+//            Log
             break;
         }
     }
 
     // Main Functions
-    bool Login(LoginPacket&);
-    bool Register(RegisterPacket&);
+    bool ProcessAction();
+    bool BroadCast(RegisterPacket&);
+    bool Pasue();
 
     // Utility
-    bool ExistAccount(const std::string&, const std::string&);
-    bool ExistAccount(const std::string&);
-    std::string GetInitializeQuery() const;
+    bool CreateRandomMap();
+    bool HitScan();
 
     // Interface, Abstracted
     virtual void IOThread() override;
@@ -66,8 +70,6 @@ private:
 
     std::mutex m_packetQueueMutex;
     std::queue<Packet> m_packetQueue;
-
-    MySql m_mySql;
 };
 
 
