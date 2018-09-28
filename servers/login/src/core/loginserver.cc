@@ -92,6 +92,24 @@ void LoginServer::StartThreadPool() {
     }
 }
 
+Packet LoginServer::GetNextPacket() {
+    TryToAccessPacketQueue();
+    auto packet = packetQueue.front();
+    FinishToAccessPacketQueue();
+
+    return packet;
+}
+
+void LoginServer::StartToAccessPacketQueue() {
+    while (packetQueue.empty());
+    while (packetQueueMutex.try_lock());
+}
+
+void LoginServer::FinishToAccessPacketQueue() {
+    packetQueue.pop();
+    packetQueueMutex.unlock();
+}
+
 std::string LoginServer::GetInitializeQuery() const {
     std::ifstream ifs("sql/accounts.sql");
 

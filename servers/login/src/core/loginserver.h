@@ -55,6 +55,11 @@ private:
 
     // Utility
     std::string GetInitializeQuery() const;
+    Packet GetNextPacket();
+
+    void StartToAccessPacketQueue();
+    void FinishToAccessPacketQueue();
+
     void InitializeDatabaseConnection();
     void InitializeThreadPool();
     void StartThreadPool();
