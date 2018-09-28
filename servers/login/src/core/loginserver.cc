@@ -11,32 +11,9 @@
 #include <core/serverbase.h>
 
 void LoginServer::StartServer() {
-    try {
-        m_mySql.runCommand("CREATE DATABASE IF NOT EXISTS accounts;");
-        m_mySql.runCommand("use accounts;");
-        m_mySql.runCommand(GetInitializeQuery().c_str());
-    } catch (MySqlException& ex) {
-        std::clog << ex.what() << '\n';
-    }
-
-    const int available_threads = std::thread::hardware_concurrency() - 1;
-
-    if (available_threads < 2) {
-        std::cerr << "[ERR] Too Low thread count from hardware_concurrency\n";
-        return;
-    }
-
-    m_threadPool = new std::thread*[available_threads];
-
-    m_threadPool[0] = new std::thread([this]() { this->IOThread(); });
-
-    for (int i = 1; i < available_threads; ++i) {
-        m_threadPool[i] = new std::thread([this]() { this->WorkerThread(); });
-    }
-
-    for (int i = 0; i < available_threads; ++i) {
-        m_threadPool[i]->join();
-    }
+    InitializeDatabaseConnection();
+    InitializeThreadPool();
+    StartThreadPool();
 }
 
 void LoginServer::IOThread() {
@@ -47,18 +24,18 @@ void LoginServer::IOThread() {
     while (true) {
         tcp::socket sock = m_acceptor.accept();
         Packet packet(sock);
-        m_packetQueue.push(packet);
+        packetQueue.push(packet);
     }
 }
 
 void LoginServer::WorkerThread() {
     std::clog << "Worker Thread is On!!\n";
     while (true) {
-        while (m_packetQueue.empty());
-        while (m_packetQueueMutex.try_lock());
-        auto packet = m_packetQueue.front();
-        m_packetQueue.pop();
-        m_packetQueueMutex.unlock();
+        while (packetQueue.empty());
+        while (packetQueueMutex.try_lock());
+        auto packet = packetQueue.front();
+        packetQueue.pop();
+        packetQueueMutex.unlock();
 
         // TODO: how to implement LOCK FREE algorithm
 
@@ -68,16 +45,51 @@ void LoginServer::WorkerThread() {
 
 bool LoginServer::ExistAccount(const std::string &id, const std::string &pw) {
     std::vector<std::tuple<std::string, std::string>> rows;
-    m_mySql.runQuery(&rows, "SELECT id, pw FROM accounts WHERE id = '?' and pw = '?';", id, pw);
+    mySql.runQuery(&rows, "SELECT id, pw FROM accounts WHERE id = '?' and pw = '?';", id, pw);
 
     return !rows.empty();
 }
 
 bool LoginServer::ExistAccount(const std::string &id) {
     std::vector<std::tuple<std::string, std::string>> rows;
-    m_mySql.runQuery(&rows, "SELECT id, pw FROM accounts WHERE id = '?';", id);
+    mySql.runQuery(&rows, "SELECT id, pw FROM accounts WHERE id = '?';", id);
 
     return !rows.empty();
+}
+
+void LoginServer::InitializeDatabaseConnection() {
+    try {
+        mySql.runCommand("CREATE DATABASE IF NOT EXISTS accounts;");
+        mySql.runCommand("use accounts;");
+        mySql.runCommand(GetInitializeQuery().c_str());
+    } catch (MySqlException& ex) {
+        std::clog << ex.what() << '\n';
+    }
+}
+
+void LoginServer::InitializeThreadPool() {
+    const int available_threads = std::thread::hardware_concurrency() - 1;
+
+    if (available_threads < 2) {
+        std::cerr << "[ERR] Too Low thread count from hardware_concurrency\n";
+        return;
+    }
+
+    threadPool = new std::thread*[available_threads];
+
+    threadPool[0] = new std::thread([this]() { this->IOThread(); });
+
+    for (int i = 1; i < available_threads; ++i) {
+        threadPool[i] = new std::thread([this]() { this->WorkerThread(); });
+    }
+}
+
+void LoginServer::StartThreadPool() {
+    const int available_threads = std::thread::hardware_concurrency() - 1;
+
+    for (int i = 0; i < available_threads; ++i) {
+        threadPool[i]->join();
+    }
 }
 
 std::string LoginServer::GetInitializeQuery() const {
@@ -115,7 +127,7 @@ bool LoginServer::Register(RegisterPacket &packet) {
         if (ExistAccount(id)) {
             std::clog << "Already there is the id\n";
         } else {
-            m_mySql.runCommand("INSERT INTO accounts VALUES('?', '?');", bId, bPw);
+            mySql.runCommand("INSERT INTO accounts VALUES('?', '?');", bId, bPw);
             std::clog << "Register!!\n";
         }
     } catch(std::exception &ex) {
