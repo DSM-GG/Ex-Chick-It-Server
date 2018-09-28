@@ -55,12 +55,19 @@ private:
 
     // Utility
     std::string GetInitializeQuery() const;
+    int GetAvailableThreadCount() const;
     Packet GetNextPacket();
+
+    void AcceptSocketConnectionAndSavePacket();
 
     void StartToAccessPacketQueue();
     void FinishToAccessPacketQueue();
 
     void InitializeDatabaseConnection();
+
+    void InitializeIOThread();
+    void InitializeWorkerThreads();
+
     void InitializeThreadPool();
     void StartThreadPool();
 

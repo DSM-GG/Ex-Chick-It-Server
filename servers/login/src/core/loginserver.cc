@@ -17,27 +17,24 @@ void LoginServer::StartServer() {
 }
 
 void LoginServer::IOThread() {
-    std::clog << "IO Thread is On!!\n";
-
-    m_acceptor.listen(50);
+    acceptor.listen(50);
 
     while (true) {
-        tcp::socket sock = m_acceptor.accept();
-        Packet packet(sock);
-        packetQueue.push(packet);
+        AcceptSocketConnectionAndSavePacket();
     }
 }
 
-void LoginServer::WorkerThread() {
-    std::clog << "Worker Thread is On!!\n";
-    while (true) {
-        while (packetQueue.empty());
-        while (packetQueueMutex.try_lock());
-        auto packet = packetQueue.front();
-        packetQueue.pop();
-        packetQueueMutex.unlock();
+void LoginServer::AcceptSocketConnectionAndSavePacket() {
+    tcp::socket sock = acceptor.accept();
+    Packet packet(sock);
+    packetQueue.push(packet);
+}
 
-        // TODO: how to implement LOCK FREE algorithm
+void LoginServer::WorkerThread() {
+    while (true) {
+        StartToAccessPacketQueue();
+        auto packet = GetNextPacket();
+        FinishToAccessPacketQueue();
 
         HandlePacket(packet);
     }
@@ -46,14 +43,12 @@ void LoginServer::WorkerThread() {
 bool LoginServer::ExistAccount(const std::string &id, const std::string &pw) {
     std::vector<std::tuple<std::string, std::string>> rows;
     mySql.runQuery(&rows, "SELECT id, pw FROM accounts WHERE id = '?' and pw = '?';", id, pw);
-
     return !rows.empty();
 }
 
 bool LoginServer::ExistAccount(const std::string &id) {
     std::vector<std::tuple<std::string, std::string>> rows;
     mySql.runQuery(&rows, "SELECT id, pw FROM accounts WHERE id = '?';", id);
-
     return !rows.empty();
 }
 
@@ -67,37 +62,33 @@ void LoginServer::InitializeDatabaseConnection() {
     }
 }
 
-void LoginServer::InitializeThreadPool() {
-    const int available_threads = std::thread::hardware_concurrency() - 1;
-
-    if (available_threads < 2) {
-        std::cerr << "[ERR] Too Low thread count from hardware_concurrency\n";
-        return;
-    }
-
-    threadPool = new std::thread*[available_threads];
-
+void LoginServer::InitializeIOThread() {
     threadPool[0] = new std::thread([this]() { this->IOThread(); });
+}
 
-    for (int i = 1; i < available_threads; ++i) {
+void LoginServer::InitializeWorkerThreads() {
+    for (int i = 1; i < GetAvailableThreadCount(); ++i) {
         threadPool[i] = new std::thread([this]() { this->WorkerThread(); });
     }
 }
 
+void LoginServer::InitializeThreadPool() {
+    auto availableThreadCount = GetAvailableThreadCount();
+    threadPool = new std::thread*[availableThreadCount];
+    InitializeIOThread();
+    InitializeWorkerThreads();
+}
+
+int LoginServer::GetAvailableThreadCount() const {
+    return std::thread::hardware_concurrency() - 1;
+}
+
 void LoginServer::StartThreadPool() {
-    const int available_threads = std::thread::hardware_concurrency() - 1;
+    const int available_threads = GetAvailableThreadCount();
 
     for (int i = 0; i < available_threads; ++i) {
         threadPool[i]->join();
     }
-}
-
-Packet LoginServer::GetNextPacket() {
-    TryToAccessPacketQueue();
-    auto packet = packetQueue.front();
-    FinishToAccessPacketQueue();
-
-    return packet;
 }
 
 void LoginServer::StartToAccessPacketQueue() {
@@ -119,6 +110,14 @@ std::string LoginServer::GetInitializeQuery() const {
     return query;
 }
 
+Packet LoginServer::GetNextPacket() {
+    StartToAccessPacketQueue();
+    auto packet = packetQueue.front();
+    FinishToAccessPacketQueue();
+
+    return packet;
+}
+
 bool LoginServer::Login(LoginPacket &packet) {
     try {
         std::string id((char*) &packet.GetId()), pw((char*) &packet.GetPw()), bId, bPw;
@@ -126,14 +125,13 @@ bool LoginServer::Login(LoginPacket &packet) {
         Base64::Encode(pw, &bPw);
 
         if (ExistAccount(bId, bPw)) {
-            std::clog << "Login!!\n";
+            return true;
         } else {
-            std::clog << "Wrong Account\n";
+            return false;
         }
     } catch(std::exception &ex) {
         ex.what();
     };
-    return true;
 }
 
 bool LoginServer::Register(RegisterPacket &packet) {
@@ -142,14 +140,14 @@ bool LoginServer::Register(RegisterPacket &packet) {
         Base64::Encode(id, &bId);
         Base64::Encode(pw, &bPw);
 
-        if (ExistAccount(id)) {
-            std::clog << "Already there is the id\n";
+        if (ExistAccount(id)) {;
+            return false;
         } else {
             mySql.runCommand("INSERT INTO accounts VALUES('?', '?');", bId, bPw);
             std::clog << "Register!!\n";
+            return true;
         }
     } catch(std::exception &ex) {
         ex.what();
     };
-    return true;
 }
