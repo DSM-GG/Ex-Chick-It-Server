@@ -49,10 +49,10 @@ public:
         uint32_t id, pw;
     };
 
-    Packet(tcp::socket& socket) : m_socket(&socket) {
-        socket.receive(boost::asio::buffer(&m_data, sizeof(ArtoriaPacketData)));
+    Packet(tcp::socket& socket) : socket(&socket) {
+        socket.receive(boost::asio::buffer(&data, sizeof(ArtoriaPacketData)));
 
-        PacketType& packetType = m_data.packetType;
+        PacketType& packetType = data.packetType;
 
         switch (packetType) {
         case LOGIN_PACKET:
@@ -66,20 +66,21 @@ public:
     }
 
     ~Packet() {
-        m_socket->close();
+        socket->close();
     }
 
-    inline PacketType GetPacketType() const { return m_data.packetType; }
-    inline tcp::socket& GetSocket() { return *m_socket; }
+    inline PacketType GetPacketType() const { return data.packetType; }
+    inline tcp::socket& GetSocket() { return *socket; }
+    inline void SetPacketType(PacketType packetType) { data.packetType = packetType; }
 
     template <typename T>
-    inline T& GetDataAs() const { return *(T*)(&m_data); }
+    inline T& GetDataAs() const { return *(T*)(&data); }
 
     inline struct ArtoriaAccountPacketData& GetDataAsAccountData() const { return GetDataAs<ArtoriaAccountPacketData>(); }
 
 private:
-    tcp::socket* m_socket;
-    struct ArtoriaPacketData m_data;
+    tcp::socket* socket;
+    struct ArtoriaPacketData data;
 };
 
 #endif //WSL_PACKET_H

@@ -25,7 +25,7 @@ class LoginServer : private ServerBase {
 public:
     LoginServer(const uint16_t &port)
     : ServerBase(port),
-      m_mySql("0.0.0.0", "root", "1234") {
+      mySql("0.0.0.0", "root", "1234") {
 
     }
 
@@ -54,20 +54,29 @@ private:
     bool Register(RegisterPacket&);
 
     // Utility
+    std::string GetInitializeQuery() const;
+    Packet GetNextPacket();
+
+    void StartToAccessPacketQueue();
+    void FinishToAccessPacketQueue();
+
+    void InitializeDatabaseConnection();
+    void InitializeThreadPool();
+    void StartThreadPool();
+
     bool ExistAccount(const std::string&, const std::string&);
     bool ExistAccount(const std::string&);
-    std::string GetInitializeQuery() const;
 
     // Interface, Abstracted
     virtual void IOThread() override;
     virtual void WorkerThread() override;
 
-    std::thread** m_threadPool = nullptr;
+    std::thread** threadPool = nullptr;
 
-    std::mutex m_packetQueueMutex;
-    std::queue<Packet> m_packetQueue;
+    std::mutex packetQueueMutex;
+    std::queue<Packet> packetQueue;
 
-    MySql m_mySql;
+    MySql mySql;
 };
 
 

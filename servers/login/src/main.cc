@@ -10,8 +10,6 @@
 
 int main() {
     LoginServer server(4000);
-
     server.StartServer();
-
     return 0;
 }
