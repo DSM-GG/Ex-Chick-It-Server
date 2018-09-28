@@ -1,0 +1,22 @@
+
+version: '2.1'
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ~/volumes/mariadb/conf:/etc/mysql
+      - ~/volumes/mariadb/data:/var/lib/mysql
+
+  couchbase:
+    image: couchbase:latest
+    container_name: couchbase
+    restart: always
+    ports:
+      - "8091-8094:8091-8094"
+      - "11210:11210"

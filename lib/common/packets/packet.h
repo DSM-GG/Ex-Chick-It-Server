@@ -6,7 +6,6 @@
 #define WSL_PACKET_H
 
 #include <boost/asio.hpp>
-#include "core/memorystream.h"
 
 using namespace boost::asio::ip;
 

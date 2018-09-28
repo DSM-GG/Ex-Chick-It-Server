@@ -15,11 +15,11 @@ public:
         uint32_t pw;
     };
 
-    uint32_t& GetId() { return GetData().id; }
-    uint32_t& GetPw() { return GetData().pw; }
+    uint32_t& GetId() { return GetDataAsAccountData().id; }
+    uint32_t& GetPw() { return GetDataAsAccountData().pw; }
 
 private:
-    inline RegisterData& GetData() { return *reinterpret_cast<RegisterData*>(GetBuffer()); }
+//    inline RegisterData& GetData() { return *reinterpret_cast<RegisterData*>(GetBuffer()); }
 };
 
 #endif //WSL_REGISTERPACKET_H
