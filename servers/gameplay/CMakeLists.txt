@@ -14,8 +14,8 @@ include_directories(
 
 add_executable(GamePlayServer
         src/packets/packet.h
-        src/core/logicserver.cc
-        src/core/logicserver.h
+        src/core/gameplayserver.cc
+        src/core/gameplayserver.h
         src/main.cc
         src/packets/loginpacket.h
         src/packets/registerpacket.h src/core/util.cc src/core/util.h)
