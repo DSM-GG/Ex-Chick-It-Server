@@ -29,12 +29,14 @@ private:
 
     inline void HandlePacket(Packet& packet) {
         switch (packet.GetPacketType()) {
+        case ACTION_PACKET:
+            break;
+
         default:
             break;
         }
     }
 
-    std::string GetInitializeQuery() const;
     int GetAvailableThreadCount() const;
     Packet GetNextPacket();
 
@@ -42,8 +44,6 @@ private:
 
     void StartToAccessPacketQueue();
     void FinishToAccessPacketQueue();
-
-    void InitializeDatabaseConnection();
 
     void InitializeIOThread();
     void InitializeWorkerThreads();
@@ -54,14 +54,10 @@ private:
     // Main Functions
     bool ProcessAction();
     bool BroadCast(RegisterPacket&);
-    bool Pasue();
 
     // Utility
     bool CreateRandomMap();
     bool HitScan();
-
-    bool ExistAccount(const std::string&, const std::string&);
-    bool ExistAccount(const std::string&);
 
     virtual void IOThread() override;
     virtual void WorkerThread() override;
@@ -70,8 +66,6 @@ private:
 
     std::mutex packetQueueMutex;
     std::queue<Packet> packetQueue;
-
-    MySql mySql;
 };
 
 
