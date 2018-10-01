@@ -12,25 +12,16 @@
 #include <queue>
 #include <mutex>
 
-#include <packets/loginpacket.h>
-#include <packets/registerpacket.h>
-
 #include <core/serverbase.h>
 
 using boost::asio::ip::tcp;
 
 class GamePlayServer : private ServerBase {
 public:
-    // 플레이 서버
-    // 공격
-    /*
-     * 액션 목록
-     * ---------
-     * 공격 (총)
-     * 이동
-     * ㅌ
-     */
-    GamePlayServer(const uint16_t &port) : ServerBase(port) { }
+    GamePlayServer(const uint16_t &port)
+    : ServerBase(port) {
+
+    }
 
     void StartServer();
 
@@ -38,38 +29,43 @@ private:
 
     inline void HandlePacket(Packet& packet) {
         switch (packet.GetPacketType()) {
-        case Packet:
-            Login(*reinterpret_cast<LoginPacket*>(&packet));
-            break;
-
-        case REGISTER_PACKET:
-            Register(*reinterpret_cast<RegisterPacket*>(&packet));
+        case ACTION_PACKET:
             break;
 
         default:
-            packet.SetPacketType(WRONG_PACKET);
-//            Log
             break;
         }
     }
 
+    int GetAvailableThreadCount() const;
+    Packet GetNextPacket();
+
+    void AcceptSocketConnectionAndSavePacket();
+
+    void StartToAccessPacketQueue();
+    void FinishToAccessPacketQueue();
+
+    void InitializeIOThread();
+    void InitializeWorkerThreads();
+
+    void InitializeThreadPool();
+    void StartThreadPool();
+
     // Main Functions
     bool ProcessAction();
     bool BroadCast(RegisterPacket&);
-    bool Pasue();
 
     // Utility
     bool CreateRandomMap();
     bool HitScan();
 
-    // Interface, Abstracted
     virtual void IOThread() override;
     virtual void WorkerThread() override;
 
-    std::thread** m_threadPool = nullptr;
+    std::thread** threadPool = nullptr;
 
-    std::mutex m_packetQueueMutex;
-    std::queue<Packet> m_packetQueue;
+    std::mutex packetQueueMutex;
+    std::queue<Packet> packetQueue;
 };
 
 

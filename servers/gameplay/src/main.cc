@@ -5,9 +5,9 @@
 #include <iostream>
 #include <thread>
 
-#include "core/logicserver.h"
+#include "core/gameplayserver.h"
 #include <base64.h>
-#include "core/logicserver.h"
+#include "core/gameplayserver.h"
 
 int main() {
     LogicServer server(4000);
