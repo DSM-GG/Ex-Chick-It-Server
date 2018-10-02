@@ -60,9 +60,10 @@ namespace Util {
             return *this;
         }
 
-        inline void operator *=(const double literal) {
+        inline Vector2& operator *=(const double literal) {
             x *= literal;
             y *= literal;
+            return *this;
         }
     };
 };
