@@ -7,6 +7,7 @@
 
 
 namespace Util {
+
     class Vector2 {
         double x;
         double y;
@@ -38,10 +39,6 @@ namespace Util {
             return Vector2 { x / literal, y / literal };
         }
 
-        inline bool operator ==(Vector2 other) {
-            return x == other.x && y == other.y;
-        }
-
         inline Vector2& operator +=(Vector2 other) {
             x += other.x;
             y += other.y;
@@ -66,6 +63,11 @@ namespace Util {
             return *this;
         }
     };
+
+
+    inline bool operator ==(const Vector2& a, const Vector2& b) {
+        return a.GetX() == b.GetX() && a.GetY() == b.GetY();
+    }
 };
 
 
