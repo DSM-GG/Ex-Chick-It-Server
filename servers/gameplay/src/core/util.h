@@ -7,6 +7,7 @@
 
 
 namespace Util {
+
     class Vector2 {
         double x;
         double y;
@@ -18,54 +19,55 @@ namespace Util {
 
         inline double GetX() const { return x; }
         inline double GetY() const { return y; }
-        inline double GetDistance(Vector2& vector2) const {
-            return (vector2.x - x) * (vector2.y - y);
+        inline double GetDistance(Vector2& other) const {
+            return (other.x - x) * (other.y - y);
         }
 
-        inline void operator +(Vector2 vector2) {
-            x += vector2.x;
-            y += vector2.y;
+        inline Vector2 operator +(const Vector2 other) {
+            return Vector2 { x + other.x, y + other.y };
         }
 
-        inline void operator -(Vector2 vector2) {
-            x -= vector2.x;
-            y -= vector2.y;
+        inline Vector2 operator -(const Vector2 other) {
+            return Vector2 { x - other.x, y - other.y };
         }
 
-        inline void operator *(const double literal) {
-            x *= literal;
-            y *= literal;
+        inline Vector2 operator *(const double literal) {
+            return Vector2 { x * literal, y * literal };
         }
 
-        inline void operator /(const double literal) {
+        inline Vector2 operator /(const double literal) {
+            return Vector2 { x / literal, y / literal };
+        }
+
+        inline Vector2& operator +=(Vector2 other) {
+            x += other.x;
+            y += other.y;
+            return *this;
+        }
+
+        inline Vector2& operator -=(Vector2 other) {
+            x -= other.x;
+            y -= other.y;
+            return *this;
+        }
+
+        inline Vector2& operator /=(const double literal) {
             x /= literal;
             y /= literal;
+            return *this;
         }
 
-        inline bool operator ==(Vector2 vector2) {
-            return x == vector2.x && y == vector2.y;
-        }
-
-        inline void operator +=(Vector2 vector2) {
-            x += vector2.x;
-            y += vector2.y;
-        }
-
-        inline void operator -=(Vector2 vector2) {
-            x -= vector2.x;
-            y -= vector2.y;
-        }
-
-        inline void operator /=(const double literal) {
-            x /= literal;
-            y /= literal;
-        }
-
-        inline void operator *=(const double literal) {
+        inline Vector2& operator *=(const double literal) {
             x *= literal;
             y *= literal;
+            return *this;
         }
     };
+
+
+    inline bool operator ==(const Vector2& a, const Vector2& b) {
+        return a.GetX() == b.GetX() && a.GetY() == b.GetY();
+    }
 };
 
 
