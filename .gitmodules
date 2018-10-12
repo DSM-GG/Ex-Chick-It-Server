@@ -2,3 +2,6 @@
 	path = lib/libcouchbase-cxx
 	url = https://github.com/couchbaselabs/libcouchbase-cxx.git
 git
+[submodule "lib/boost/asio"]
+	path = lib/boost/asio
+	url = https://github.com/boostorg/asio.git
