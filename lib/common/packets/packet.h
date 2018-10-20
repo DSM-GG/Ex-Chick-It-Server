@@ -5,10 +5,6 @@
 #ifndef WSL_PACKET_H
 #define WSL_PACKET_H
 
-#include <boost/asio.hpp>
-
-using namespace boost::asio::ip;
-
 using PacketType = uint8_t;
 
 enum Type : uint8_t {
