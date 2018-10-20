@@ -1,0 +1,4 @@
+language: cpp
+
+script:
+  - cmake --build . --target LoginServer -- -j 4
