@@ -1,2 +1,3 @@
 # Ex-Chick-It-Server
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/55ebc32fa8cb41f08dd5ea550ac1aa28)](https://app.codacy.com/app/dogeonlove0326/Ex-Chick-It-Server?utm_source=github.com&utm_medium=referral&utm_content=moreal/Ex-Chick-It-Server&utm_campaign=Badge_Grade_Dashboard)
+[![Build Status](https://travis-ci.com/moreal/Ex-Chick-It-Server.svg?branch=master)](https://travis-ci.com/moreal/Ex-Chick-It-Server)
