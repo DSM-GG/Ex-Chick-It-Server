@@ -5,28 +5,25 @@
 #ifndef WSL_SERVER_H
 #define WSL_SERVER_H
 
-#include <boost/asio.hpp>
-
 #include <iostream>
 #include <thread>
 #include <string>
 #include <queue>
 #include <mutex>
 
-#include <MySql.hpp>
-
 #include <packets/loginpacket.h>
 #include <packets/registerpacket.h>
 #include <core/serverbase.h>
 
-using boost::asio::ip::tcp;
+#include <mysql++/mysql++.h>
 
 class LoginServer : private ServerBase {
 public:
     LoginServer(const uint16_t &port)
-    : ServerBase(port),
-      mySql("0.0.0.0", "root", "1234") {
-
+    : ServerBase(port) {
+        mySql.connect("0.0.0.0", "root", "1234");
+        mysqlpp::Query query = mySql.query("");
+        query.
     }
 
     void StartServer();
@@ -83,7 +80,8 @@ private:
     std::mutex packetQueueMutex;
     std::queue<Packet> packetQueue;
 
-    MySql mySql;
+    mysqlpp::Connection mySql;
+
 };
 
 

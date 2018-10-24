@@ -4,11 +4,13 @@
 #include <fstream>
 #include <tuple>
 
-#include <MySql.hpp>
+#include <mysql++/mysql++.h>
 #include <base64.h>
 
 #include <core/loginserver.h>
 #include <core/serverbase.h>
+
+#include <zmq.hpp>
 
 void LoginServer::StartServer() {
     InitializeDatabaseConnection();
@@ -40,6 +42,7 @@ void LoginServer::WorkerThread() {
     }
 }
 
+
 bool LoginServer::ExistAccount(const std::string &id, const std::string &pw) {
     std::vector<std::tuple<std::string, std::string>> rows;
     mySql.runQuery(&rows, "SELECT id, pw FROM accounts WHERE id = '?' and pw = '?';", id, pw);
@@ -54,6 +57,8 @@ bool LoginServer::ExistAccount(const std::string &id) {
 
 void LoginServer::InitializeDatabaseConnection() {
     try {
+        mysqlpp::Connection connection;
+        connection.connect()
         mySql.runCommand("CREATE DATABASE IF NOT EXISTS accounts;");
         mySql.runCommand("use accounts;");
         mySql.runCommand(GetInitializeQuery().c_str());
