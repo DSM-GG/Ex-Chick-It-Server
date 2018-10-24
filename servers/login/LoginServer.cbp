@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="LoginServer"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\servers\;CMake Files\servers\login\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LoginServer">
+				<Option output="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/LoginServer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/src"/>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/../../lib/base64"/>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/../../lib/common"/>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/../../lib/boost/asio/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 LoginServer"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="LoginServer/fast">
+				<Option output="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/LoginServer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/src"/>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/../../lib/base64"/>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/../../lib/common"/>
+					<Add directory="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/../../lib/boost/asio/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 LoginServer/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/src/core/loginserver.cc">
+			<Option target="LoginServer"/>
+		</Unit>
+		<Unit filename="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/src/core/loginserver.h">
+			<Option target="LoginServer"/>
+		</Unit>
+		<Unit filename="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/src/main.cc">
+			<Option target="LoginServer"/>
+		</Unit>
+		<Unit filename="/home/moreal/Github/game_server/Ex-Chick-It-Server/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\servers\"/>
+		</Unit>
+		<Unit filename="/home/moreal/Github/game_server/Ex-Chick-It-Server/servers/login/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\servers\login\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
