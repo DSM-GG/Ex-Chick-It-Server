@@ -5,38 +5,29 @@
 #ifndef WSL_SERVER_H
 #define WSL_SERVER_H
 
-#include <boost/asio.hpp>
-
 #include <thread>
 #include <string>
 #include <queue>
 #include <mutex>
 
-#include <core/serverbase.h>
+#include <zmq.hpp>
 
-using boost::asio::ip::tcp;
+#include <packets/action.pb.h>
 
-class GamePlayServer : private ServerBase {
+class GamePlayServer {
 public:
-    GamePlayServer(const uint16_t &port)
-    : ServerBase(port) {
 
+    GamePlayServer(const uint16_t &port)
+    : firstUser(context, ZMQ_REP),
+      secondUser(context, ZMQ_REP)
+    {
+        firstUser.bind("tcp://*:" + port);
+        secondUser.bind("tcp://*:" + port);
     }
 
     void StartServer();
 
 private:
-
-    inline void HandlePacket(Packet& packet) {
-        switch (packet.GetPacketType()) {
-        case ACTION_PACKET:
-            break;
-
-        default:
-            break;
-        }
-    }
-
     int GetAvailableThreadCount() const;
     Packet GetNextPacket();
 
@@ -65,7 +56,10 @@ private:
     std::thread** threadPool = nullptr;
 
     std::mutex packetQueueMutex;
-    std::queue<Packet> packetQueue;
+
+    zmq::context_t context;
+    zmq::socket_t secondUser;
+    zmq::socket_t firstUser;
 };
 
 

@@ -1,10 +1,14 @@
 #include <iostream>
 
 #include <core/gameplayserver.h>
+#include <packets/action.pb.h>
 
 void GamePlayServer::StartServer() {
     InitializeThreadPool();
     StartThreadPool();
+
+    gameplay::ActionPacket packet;
+    packet.is_move();
 }
 
 void GamePlayServer::IOThread() {
