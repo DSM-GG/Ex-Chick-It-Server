@@ -23,7 +23,13 @@ message ActionPacket {
     float send_time = 5;
 }
 
-message BroadCastPacket {
-    User you = 1;
-    User other = 2;
+message EventPacket {
+    int32 session_id = 1; // identity for who did this event
+
+    enum ActionType {
+        MOVE = 0;
+        ATTACK = 1;
+    }
+
+    ActionType type = 2;
 }

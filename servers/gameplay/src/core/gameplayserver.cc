@@ -4,80 +4,25 @@
 #include <packets/action.pb.h>
 
 void GamePlayServer::StartServer() {
-    InitializeThreadPool();
-    StartThreadPool();
-
     gameplay::ActionPacket packet;
-    packet.is_move();
+
+    MainServerLoop();
 }
 
-void GamePlayServer::IOThread() {
-    acceptor.listen(50);
-
+void GamePlayServer::MainServerLoop() {
     while (true) {
-        AcceptSocketConnectionAndSavePacket();
+        // PULL
+        zmq::message_t message;
+        pullSocket.recv(&message);
+
+        message.size();
+
+        // PROCESS
+
+        // PUB
+//        zmq::message_t publishMessage(gameplay::ActionPacket::ByteSize());
+//        publishMessage.
+
+        publishSocket.send(message);
     }
-}
-
-void GamePlayServer::AcceptSocketConnectionAndSavePacket() {
-    tcp::socket sock = acceptor.accept();
-    Packet packet(sock);
-    packetQueue.push(packet);
-}
-
-void GamePlayServer::WorkerThread() {
-    while (true) {
-        StartToAccessPacketQueue();
-        auto packet = GetNextPacket();
-        FinishToAccessPacketQueue();
-
-        HandlePacket(packet);
-    }
-}
-
-void GamePlayServer::InitializeIOThread() {
-    threadPool[0] = new std::thread([this]() { this->IOThread(); });
-}
-
-void GamePlayServer::InitializeWorkerThreads() {
-    for (int i = 1; i < GetAvailableThreadCount(); ++i) {
-        threadPool[i] = new std::thread([this]() { this->WorkerThread(); });
-    }
-}
-
-void GamePlayServer::InitializeThreadPool() {
-    auto availableThreadCount = GetAvailableThreadCount();
-    threadPool = new std::thread*[availableThreadCount];
-    InitializeIOThread();
-    InitializeWorkerThreads();
-}
-
-int GamePlayServer::GetAvailableThreadCount() const {
-    return std::thread::hardware_concurrency() - 1;
-}
-
-void GamePlayServer::StartThreadPool() {
-    const int available_threads = GetAvailableThreadCount();
-
-    for (int i = 0; i < available_threads; ++i) {
-        threadPool[i]->join();
-    }
-}
-
-void GamePlayServer::StartToAccessPacketQueue() {
-    while (packetQueue.empty());
-    while (packetQueueMutex.try_lock());
-}
-
-void GamePlayServer::FinishToAccessPacketQueue() {
-    packetQueue.pop();
-    packetQueueMutex.unlock();
-}
-
-Packet GamePlayServer::GetNextPacket() {
-    StartToAccessPacketQueue();
-    auto packet = packetQueue.front();
-    FinishToAccessPacketQueue();
-
-    return packet;
 }
