@@ -28,16 +28,15 @@ public:
     void StartServer();
 
 private:
-    // Main Functions
-    bool BroadCast(gameplay::ActionPacket&);
-
     // Utility
     bool CreateRandomMap();
     bool HitScan(gameplay::User&, gameplay::User&);
 
     // Loop
     void MainServerLoop();
+    gameplay::ActionPacket ReceiveAction();
     gameplay::ActionPacket ProcessAction(gameplay::ActionPacket);
+    bool BroadCastAction();
 
     zmq::context_t context;
     zmq::socket_t publishSocket;
