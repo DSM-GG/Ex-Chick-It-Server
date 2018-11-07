@@ -3,6 +3,8 @@
 #include <core/gameplayserver.h>
 #include <packets/action.pb.h>
 
+using gameplay::ActionPacket;
+
 void GamePlayServer::StartServer() {
     gameplay::ActionPacket packet;
 
@@ -11,9 +13,6 @@ void GamePlayServer::StartServer() {
 
 void GamePlayServer::MainServerLoop() {
     while (true) {
-        // PULL
-        zmq::message_t message;
-        pullSocket.recv(&message);
 
         message.size();
 
@@ -24,5 +23,25 @@ void GamePlayServer::MainServerLoop() {
 //        publishMessage.
 
         publishSocket.send(message);
+    }
+}
+
+ActionPacket GamePlayServer::ReceiveAction() {
+    zmq::message_t message;
+    pullSocket.recv(&message);
+
+    ActionPacket actionPacket;
+    actionPacket.ParseFromArray(message.data(), message.size());
+
+    return actionPacket;
+}
+
+ActionPacket GamePlayServer::ProcessAction(gameplay::ActionPacket&& actionPacket) {
+    if (actionPacket.is_move()) {
+        // Process Move
+    } else if (actionPacket.is_attack()) {
+        // Process Attack
+    } else {
+        // Wrong input
     }
 }

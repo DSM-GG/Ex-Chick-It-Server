@@ -35,7 +35,7 @@ private:
     // Loop
     void MainServerLoop();
     gameplay::ActionPacket ReceiveAction();
-    gameplay::ActionPacket ProcessAction(gameplay::ActionPacket);
+    gameplay::ActionPacket ProcessAction(gameplay::ActionPacket&&);
     bool BroadCastAction();
 
     zmq::context_t context;
