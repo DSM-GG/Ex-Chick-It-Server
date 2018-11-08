@@ -29,6 +29,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #define PROTOBUF_INTERNAL_EXPORT_protobuf_action_2eproto 
@@ -38,7 +39,7 @@ namespace protobuf_action_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[4];
+  static const ::google::protobuf::internal::ParseTable schema[1];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,49 +47,58 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_action_2eproto
 namespace gameplay {
-class ActionPacket;
-class ActionPacketDefaultTypeInternal;
-extern ActionPacketDefaultTypeInternal _ActionPacket_default_instance_;
-class BroadCastPacket;
-class BroadCastPacketDefaultTypeInternal;
-extern BroadCastPacketDefaultTypeInternal _BroadCastPacket_default_instance_;
-class User;
-class UserDefaultTypeInternal;
-extern UserDefaultTypeInternal _User_default_instance_;
-class User_Vector2;
-class User_Vector2DefaultTypeInternal;
-extern User_Vector2DefaultTypeInternal _User_Vector2_default_instance_;
+class EventPacket;
+class EventPacketDefaultTypeInternal;
+extern EventPacketDefaultTypeInternal _EventPacket_default_instance_;
 }  // namespace gameplay
 namespace google {
 namespace protobuf {
-template<> ::gameplay::ActionPacket* Arena::CreateMaybeMessage<::gameplay::ActionPacket>(Arena*);
-template<> ::gameplay::BroadCastPacket* Arena::CreateMaybeMessage<::gameplay::BroadCastPacket>(Arena*);
-template<> ::gameplay::User* Arena::CreateMaybeMessage<::gameplay::User>(Arena*);
-template<> ::gameplay::User_Vector2* Arena::CreateMaybeMessage<::gameplay::User_Vector2>(Arena*);
+template<> ::gameplay::EventPacket* Arena::CreateMaybeMessage<::gameplay::EventPacket>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace gameplay {
 
+enum EventPacket_ActionType {
+  EventPacket_ActionType_MOVE = 0,
+  EventPacket_ActionType_ATTACK = 1,
+  EventPacket_ActionType_EventPacket_ActionType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  EventPacket_ActionType_EventPacket_ActionType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool EventPacket_ActionType_IsValid(int value);
+const EventPacket_ActionType EventPacket_ActionType_ActionType_MIN = EventPacket_ActionType_MOVE;
+const EventPacket_ActionType EventPacket_ActionType_ActionType_MAX = EventPacket_ActionType_ATTACK;
+const int EventPacket_ActionType_ActionType_ARRAYSIZE = EventPacket_ActionType_ActionType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* EventPacket_ActionType_descriptor();
+inline const ::std::string& EventPacket_ActionType_Name(EventPacket_ActionType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    EventPacket_ActionType_descriptor(), value);
+}
+inline bool EventPacket_ActionType_Parse(
+    const ::std::string& name, EventPacket_ActionType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<EventPacket_ActionType>(
+    EventPacket_ActionType_descriptor(), name, value);
+}
 // ===================================================================
 
-class User_Vector2 : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:gameplay.User.Vector2) */ {
+class EventPacket : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:gameplay.EventPacket) */ {
  public:
-  User_Vector2();
-  virtual ~User_Vector2();
+  EventPacket();
+  virtual ~EventPacket();
 
-  User_Vector2(const User_Vector2& from);
+  EventPacket(const EventPacket& from);
 
-  inline User_Vector2& operator=(const User_Vector2& from) {
+  inline EventPacket& operator=(const EventPacket& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  User_Vector2(User_Vector2&& from) noexcept
-    : User_Vector2() {
+  EventPacket(EventPacket&& from) noexcept
+    : EventPacket() {
     *this = ::std::move(from);
   }
 
-  inline User_Vector2& operator=(User_Vector2&& from) noexcept {
+  inline EventPacket& operator=(EventPacket&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -98,34 +108,34 @@ class User_Vector2 : public ::google::protobuf::Message /* @@protoc_insertion_po
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const User_Vector2& default_instance();
+  static const EventPacket& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const User_Vector2* internal_default_instance() {
-    return reinterpret_cast<const User_Vector2*>(
-               &_User_Vector2_default_instance_);
+  static inline const EventPacket* internal_default_instance() {
+    return reinterpret_cast<const EventPacket*>(
+               &_EventPacket_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  void Swap(User_Vector2* other);
-  friend void swap(User_Vector2& a, User_Vector2& b) {
+  void Swap(EventPacket* other);
+  friend void swap(EventPacket& a, EventPacket& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline User_Vector2* New() const final {
-    return CreateMaybeMessage<User_Vector2>(NULL);
+  inline EventPacket* New() const final {
+    return CreateMaybeMessage<EventPacket>(NULL);
   }
 
-  User_Vector2* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<User_Vector2>(arena);
+  EventPacket* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<EventPacket>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const User_Vector2& from);
-  void MergeFrom(const User_Vector2& from);
+  void CopyFrom(const EventPacket& from);
+  void MergeFrom(const EventPacket& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -142,7 +152,7 @@ class User_Vector2 : public ::google::protobuf::Message /* @@protoc_insertion_po
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(User_Vector2* other);
+  void InternalSwap(EventPacket* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -156,240 +166,31 @@ class User_Vector2 : public ::google::protobuf::Message /* @@protoc_insertion_po
 
   // nested types ----------------------------------------------------
 
-  // accessors -------------------------------------------------------
-
-  // int32 x = 1;
-  void clear_x();
-  static const int kXFieldNumber = 1;
-  ::google::protobuf::int32 x() const;
-  void set_x(::google::protobuf::int32 value);
-
-  // int32 y = 2;
-  void clear_y();
-  static const int kYFieldNumber = 2;
-  ::google::protobuf::int32 y() const;
-  void set_y(::google::protobuf::int32 value);
-
-  // @@protoc_insertion_point(class_scope:gameplay.User.Vector2)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::int32 x_;
-  ::google::protobuf::int32 y_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_action_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class User : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:gameplay.User) */ {
- public:
-  User();
-  virtual ~User();
-
-  User(const User& from);
-
-  inline User& operator=(const User& from) {
-    CopyFrom(from);
-    return *this;
+  typedef EventPacket_ActionType ActionType;
+  static const ActionType MOVE =
+    EventPacket_ActionType_MOVE;
+  static const ActionType ATTACK =
+    EventPacket_ActionType_ATTACK;
+  static inline bool ActionType_IsValid(int value) {
+    return EventPacket_ActionType_IsValid(value);
   }
-  #if LANG_CXX11
-  User(User&& from) noexcept
-    : User() {
-    *this = ::std::move(from);
+  static const ActionType ActionType_MIN =
+    EventPacket_ActionType_ActionType_MIN;
+  static const ActionType ActionType_MAX =
+    EventPacket_ActionType_ActionType_MAX;
+  static const int ActionType_ARRAYSIZE =
+    EventPacket_ActionType_ActionType_ARRAYSIZE;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ActionType_descriptor() {
+    return EventPacket_ActionType_descriptor();
   }
-
-  inline User& operator=(User&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
+  static inline const ::std::string& ActionType_Name(ActionType value) {
+    return EventPacket_ActionType_Name(value);
   }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const User& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const User* internal_default_instance() {
-    return reinterpret_cast<const User*>(
-               &_User_default_instance_);
+  static inline bool ActionType_Parse(const ::std::string& name,
+      ActionType* value) {
+    return EventPacket_ActionType_Parse(name, value);
   }
-  static constexpr int kIndexInFileMessages =
-    1;
-
-  void Swap(User* other);
-  friend void swap(User& a, User& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline User* New() const final {
-    return CreateMaybeMessage<User>(NULL);
-  }
-
-  User* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<User>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const User& from);
-  void MergeFrom(const User& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(User* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  typedef User_Vector2 Vector2;
-
-  // accessors -------------------------------------------------------
-
-  // .gameplay.User.Vector2 position = 3;
-  bool has_position() const;
-  void clear_position();
-  static const int kPositionFieldNumber = 3;
-  private:
-  const ::gameplay::User_Vector2& _internal_position() const;
-  public:
-  const ::gameplay::User_Vector2& position() const;
-  ::gameplay::User_Vector2* release_position();
-  ::gameplay::User_Vector2* mutable_position();
-  void set_allocated_position(::gameplay::User_Vector2* position);
-
-  // int32 session_id = 1;
-  void clear_session_id();
-  static const int kSessionIdFieldNumber = 1;
-  ::google::protobuf::int32 session_id() const;
-  void set_session_id(::google::protobuf::int32 value);
-
-  // int32 health = 2;
-  void clear_health();
-  static const int kHealthFieldNumber = 2;
-  ::google::protobuf::int32 health() const;
-  void set_health(::google::protobuf::int32 value);
-
-  // @@protoc_insertion_point(class_scope:gameplay.User)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::gameplay::User_Vector2* position_;
-  ::google::protobuf::int32 session_id_;
-  ::google::protobuf::int32 health_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_action_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class ActionPacket : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:gameplay.ActionPacket) */ {
- public:
-  ActionPacket();
-  virtual ~ActionPacket();
-
-  ActionPacket(const ActionPacket& from);
-
-  inline ActionPacket& operator=(const ActionPacket& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  ActionPacket(ActionPacket&& from) noexcept
-    : ActionPacket() {
-    *this = ::std::move(from);
-  }
-
-  inline ActionPacket& operator=(ActionPacket&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const ActionPacket& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const ActionPacket* internal_default_instance() {
-    return reinterpret_cast<const ActionPacket*>(
-               &_ActionPacket_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    2;
-
-  void Swap(ActionPacket* other);
-  friend void swap(ActionPacket& a, ActionPacket& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline ActionPacket* New() const final {
-    return CreateMaybeMessage<ActionPacket>(NULL);
-  }
-
-  ActionPacket* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<ActionPacket>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const ActionPacket& from);
-  void MergeFrom(const ActionPacket& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(ActionPacket* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
 
@@ -399,161 +200,32 @@ class ActionPacket : public ::google::protobuf::Message /* @@protoc_insertion_po
   ::google::protobuf::int32 session_id() const;
   void set_session_id(::google::protobuf::int32 value);
 
-  // float radius = 2;
+  // .gameplay.EventPacket.ActionType type = 2;
+  void clear_type();
+  static const int kTypeFieldNumber = 2;
+  ::gameplay::EventPacket_ActionType type() const;
+  void set_type(::gameplay::EventPacket_ActionType value);
+
+  // float radius = 3;
   void clear_radius();
-  static const int kRadiusFieldNumber = 2;
+  static const int kRadiusFieldNumber = 3;
   float radius() const;
   void set_radius(float value);
 
-  // bool is_attack = 3;
-  void clear_is_attack();
-  static const int kIsAttackFieldNumber = 3;
-  bool is_attack() const;
-  void set_is_attack(bool value);
-
-  // bool is_move = 4;
-  void clear_is_move();
-  static const int kIsMoveFieldNumber = 4;
-  bool is_move() const;
-  void set_is_move(bool value);
-
-  // float send_time = 5;
+  // float send_time = 4;
   void clear_send_time();
-  static const int kSendTimeFieldNumber = 5;
+  static const int kSendTimeFieldNumber = 4;
   float send_time() const;
   void set_send_time(float value);
 
-  // @@protoc_insertion_point(class_scope:gameplay.ActionPacket)
+  // @@protoc_insertion_point(class_scope:gameplay.EventPacket)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::int32 session_id_;
+  int type_;
   float radius_;
-  bool is_attack_;
-  bool is_move_;
   float send_time_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_action_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class BroadCastPacket : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:gameplay.BroadCastPacket) */ {
- public:
-  BroadCastPacket();
-  virtual ~BroadCastPacket();
-
-  BroadCastPacket(const BroadCastPacket& from);
-
-  inline BroadCastPacket& operator=(const BroadCastPacket& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  BroadCastPacket(BroadCastPacket&& from) noexcept
-    : BroadCastPacket() {
-    *this = ::std::move(from);
-  }
-
-  inline BroadCastPacket& operator=(BroadCastPacket&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const BroadCastPacket& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const BroadCastPacket* internal_default_instance() {
-    return reinterpret_cast<const BroadCastPacket*>(
-               &_BroadCastPacket_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    3;
-
-  void Swap(BroadCastPacket* other);
-  friend void swap(BroadCastPacket& a, BroadCastPacket& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline BroadCastPacket* New() const final {
-    return CreateMaybeMessage<BroadCastPacket>(NULL);
-  }
-
-  BroadCastPacket* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<BroadCastPacket>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const BroadCastPacket& from);
-  void MergeFrom(const BroadCastPacket& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(BroadCastPacket* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // .gameplay.User you = 1;
-  bool has_you() const;
-  void clear_you();
-  static const int kYouFieldNumber = 1;
-  private:
-  const ::gameplay::User& _internal_you() const;
-  public:
-  const ::gameplay::User& you() const;
-  ::gameplay::User* release_you();
-  ::gameplay::User* mutable_you();
-  void set_allocated_you(::gameplay::User* you);
-
-  // .gameplay.User other = 2;
-  bool has_other() const;
-  void clear_other();
-  static const int kOtherFieldNumber = 2;
-  private:
-  const ::gameplay::User& _internal_other() const;
-  public:
-  const ::gameplay::User& other() const;
-  ::gameplay::User* release_other();
-  ::gameplay::User* mutable_other();
-  void set_allocated_other(::gameplay::User* other);
-
-  // @@protoc_insertion_point(class_scope:gameplay.BroadCastPacket)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::gameplay::User* you_;
-  ::gameplay::User* other_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_action_2eproto::TableStruct;
 };
@@ -566,321 +238,83 @@ class BroadCastPacket : public ::google::protobuf::Message /* @@protoc_insertion
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// User_Vector2
-
-// int32 x = 1;
-inline void User_Vector2::clear_x() {
-  x_ = 0;
-}
-inline ::google::protobuf::int32 User_Vector2::x() const {
-  // @@protoc_insertion_point(field_get:gameplay.User.Vector2.x)
-  return x_;
-}
-inline void User_Vector2::set_x(::google::protobuf::int32 value) {
-  
-  x_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.User.Vector2.x)
-}
-
-// int32 y = 2;
-inline void User_Vector2::clear_y() {
-  y_ = 0;
-}
-inline ::google::protobuf::int32 User_Vector2::y() const {
-  // @@protoc_insertion_point(field_get:gameplay.User.Vector2.y)
-  return y_;
-}
-inline void User_Vector2::set_y(::google::protobuf::int32 value) {
-  
-  y_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.User.Vector2.y)
-}
-
-// -------------------------------------------------------------------
-
-// User
+// EventPacket
 
 // int32 session_id = 1;
-inline void User::clear_session_id() {
+inline void EventPacket::clear_session_id() {
   session_id_ = 0;
 }
-inline ::google::protobuf::int32 User::session_id() const {
-  // @@protoc_insertion_point(field_get:gameplay.User.session_id)
+inline ::google::protobuf::int32 EventPacket::session_id() const {
+  // @@protoc_insertion_point(field_get:gameplay.EventPacket.session_id)
   return session_id_;
 }
-inline void User::set_session_id(::google::protobuf::int32 value) {
+inline void EventPacket::set_session_id(::google::protobuf::int32 value) {
   
   session_id_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.User.session_id)
+  // @@protoc_insertion_point(field_set:gameplay.EventPacket.session_id)
 }
 
-// int32 health = 2;
-inline void User::clear_health() {
-  health_ = 0;
+// .gameplay.EventPacket.ActionType type = 2;
+inline void EventPacket::clear_type() {
+  type_ = 0;
 }
-inline ::google::protobuf::int32 User::health() const {
-  // @@protoc_insertion_point(field_get:gameplay.User.health)
-  return health_;
+inline ::gameplay::EventPacket_ActionType EventPacket::type() const {
+  // @@protoc_insertion_point(field_get:gameplay.EventPacket.type)
+  return static_cast< ::gameplay::EventPacket_ActionType >(type_);
 }
-inline void User::set_health(::google::protobuf::int32 value) {
+inline void EventPacket::set_type(::gameplay::EventPacket_ActionType value) {
   
-  health_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.User.health)
+  type_ = value;
+  // @@protoc_insertion_point(field_set:gameplay.EventPacket.type)
 }
 
-// .gameplay.User.Vector2 position = 3;
-inline bool User::has_position() const {
-  return this != internal_default_instance() && position_ != NULL;
-}
-inline void User::clear_position() {
-  if (GetArenaNoVirtual() == NULL && position_ != NULL) {
-    delete position_;
-  }
-  position_ = NULL;
-}
-inline const ::gameplay::User_Vector2& User::_internal_position() const {
-  return *position_;
-}
-inline const ::gameplay::User_Vector2& User::position() const {
-  const ::gameplay::User_Vector2* p = position_;
-  // @@protoc_insertion_point(field_get:gameplay.User.position)
-  return p != NULL ? *p : *reinterpret_cast<const ::gameplay::User_Vector2*>(
-      &::gameplay::_User_Vector2_default_instance_);
-}
-inline ::gameplay::User_Vector2* User::release_position() {
-  // @@protoc_insertion_point(field_release:gameplay.User.position)
-  
-  ::gameplay::User_Vector2* temp = position_;
-  position_ = NULL;
-  return temp;
-}
-inline ::gameplay::User_Vector2* User::mutable_position() {
-  
-  if (position_ == NULL) {
-    auto* p = CreateMaybeMessage<::gameplay::User_Vector2>(GetArenaNoVirtual());
-    position_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:gameplay.User.position)
-  return position_;
-}
-inline void User::set_allocated_position(::gameplay::User_Vector2* position) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete position_;
-  }
-  if (position) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      position = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, position, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  position_ = position;
-  // @@protoc_insertion_point(field_set_allocated:gameplay.User.position)
-}
-
-// -------------------------------------------------------------------
-
-// ActionPacket
-
-// int32 session_id = 1;
-inline void ActionPacket::clear_session_id() {
-  session_id_ = 0;
-}
-inline ::google::protobuf::int32 ActionPacket::session_id() const {
-  // @@protoc_insertion_point(field_get:gameplay.ActionPacket.session_id)
-  return session_id_;
-}
-inline void ActionPacket::set_session_id(::google::protobuf::int32 value) {
-  
-  session_id_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.ActionPacket.session_id)
-}
-
-// float radius = 2;
-inline void ActionPacket::clear_radius() {
+// float radius = 3;
+inline void EventPacket::clear_radius() {
   radius_ = 0;
 }
-inline float ActionPacket::radius() const {
-  // @@protoc_insertion_point(field_get:gameplay.ActionPacket.radius)
+inline float EventPacket::radius() const {
+  // @@protoc_insertion_point(field_get:gameplay.EventPacket.radius)
   return radius_;
 }
-inline void ActionPacket::set_radius(float value) {
+inline void EventPacket::set_radius(float value) {
   
   radius_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.ActionPacket.radius)
+  // @@protoc_insertion_point(field_set:gameplay.EventPacket.radius)
 }
 
-// bool is_attack = 3;
-inline void ActionPacket::clear_is_attack() {
-  is_attack_ = false;
-}
-inline bool ActionPacket::is_attack() const {
-  // @@protoc_insertion_point(field_get:gameplay.ActionPacket.is_attack)
-  return is_attack_;
-}
-inline void ActionPacket::set_is_attack(bool value) {
-  
-  is_attack_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.ActionPacket.is_attack)
-}
-
-// bool is_move = 4;
-inline void ActionPacket::clear_is_move() {
-  is_move_ = false;
-}
-inline bool ActionPacket::is_move() const {
-  // @@protoc_insertion_point(field_get:gameplay.ActionPacket.is_move)
-  return is_move_;
-}
-inline void ActionPacket::set_is_move(bool value) {
-  
-  is_move_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.ActionPacket.is_move)
-}
-
-// float send_time = 5;
-inline void ActionPacket::clear_send_time() {
+// float send_time = 4;
+inline void EventPacket::clear_send_time() {
   send_time_ = 0;
 }
-inline float ActionPacket::send_time() const {
-  // @@protoc_insertion_point(field_get:gameplay.ActionPacket.send_time)
+inline float EventPacket::send_time() const {
+  // @@protoc_insertion_point(field_get:gameplay.EventPacket.send_time)
   return send_time_;
 }
-inline void ActionPacket::set_send_time(float value) {
+inline void EventPacket::set_send_time(float value) {
   
   send_time_ = value;
-  // @@protoc_insertion_point(field_set:gameplay.ActionPacket.send_time)
-}
-
-// -------------------------------------------------------------------
-
-// BroadCastPacket
-
-// .gameplay.User you = 1;
-inline bool BroadCastPacket::has_you() const {
-  return this != internal_default_instance() && you_ != NULL;
-}
-inline void BroadCastPacket::clear_you() {
-  if (GetArenaNoVirtual() == NULL && you_ != NULL) {
-    delete you_;
-  }
-  you_ = NULL;
-}
-inline const ::gameplay::User& BroadCastPacket::_internal_you() const {
-  return *you_;
-}
-inline const ::gameplay::User& BroadCastPacket::you() const {
-  const ::gameplay::User* p = you_;
-  // @@protoc_insertion_point(field_get:gameplay.BroadCastPacket.you)
-  return p != NULL ? *p : *reinterpret_cast<const ::gameplay::User*>(
-      &::gameplay::_User_default_instance_);
-}
-inline ::gameplay::User* BroadCastPacket::release_you() {
-  // @@protoc_insertion_point(field_release:gameplay.BroadCastPacket.you)
-  
-  ::gameplay::User* temp = you_;
-  you_ = NULL;
-  return temp;
-}
-inline ::gameplay::User* BroadCastPacket::mutable_you() {
-  
-  if (you_ == NULL) {
-    auto* p = CreateMaybeMessage<::gameplay::User>(GetArenaNoVirtual());
-    you_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:gameplay.BroadCastPacket.you)
-  return you_;
-}
-inline void BroadCastPacket::set_allocated_you(::gameplay::User* you) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete you_;
-  }
-  if (you) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      you = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, you, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  you_ = you;
-  // @@protoc_insertion_point(field_set_allocated:gameplay.BroadCastPacket.you)
-}
-
-// .gameplay.User other = 2;
-inline bool BroadCastPacket::has_other() const {
-  return this != internal_default_instance() && other_ != NULL;
-}
-inline void BroadCastPacket::clear_other() {
-  if (GetArenaNoVirtual() == NULL && other_ != NULL) {
-    delete other_;
-  }
-  other_ = NULL;
-}
-inline const ::gameplay::User& BroadCastPacket::_internal_other() const {
-  return *other_;
-}
-inline const ::gameplay::User& BroadCastPacket::other() const {
-  const ::gameplay::User* p = other_;
-  // @@protoc_insertion_point(field_get:gameplay.BroadCastPacket.other)
-  return p != NULL ? *p : *reinterpret_cast<const ::gameplay::User*>(
-      &::gameplay::_User_default_instance_);
-}
-inline ::gameplay::User* BroadCastPacket::release_other() {
-  // @@protoc_insertion_point(field_release:gameplay.BroadCastPacket.other)
-  
-  ::gameplay::User* temp = other_;
-  other_ = NULL;
-  return temp;
-}
-inline ::gameplay::User* BroadCastPacket::mutable_other() {
-  
-  if (other_ == NULL) {
-    auto* p = CreateMaybeMessage<::gameplay::User>(GetArenaNoVirtual());
-    other_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:gameplay.BroadCastPacket.other)
-  return other_;
-}
-inline void BroadCastPacket::set_allocated_other(::gameplay::User* other) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete other_;
-  }
-  if (other) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      other = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, other, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  other_ = other;
-  // @@protoc_insertion_point(field_set_allocated:gameplay.BroadCastPacket.other)
+  // @@protoc_insertion_point(field_set:gameplay.EventPacket.send_time)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace gameplay
+
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::gameplay::EventPacket_ActionType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::gameplay::EventPacket_ActionType>() {
+  return ::gameplay::EventPacket_ActionType_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

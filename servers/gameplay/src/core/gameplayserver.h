@@ -14,29 +14,39 @@
 
 #include <packets/action.pb.h>
 
-class GamePlayServer {
-public:
+using gameplay::EventPacket;
 
+class GamePlayServer {
+
+    struct User {
+        struct Position {
+            float x;
+            float y;
+        } position;
+    };
+
+ public:
     GamePlayServer(const uint16_t &port)
     : publishSocket(context, ZMQ_PUB),
       pullSocket(context, ZMQ_PULL)
     {
-        publishSocket.bind("tcp://*:" + port);
-        pullSocket.bind("tcp://*:" + port);
     }
 
     void StartServer();
 
-private:
+ private:
+
+    void InitializeSockets(const uint16_t&&);
+
     // Utility
     bool CreateRandomMap();
-    bool HitScan(gameplay::User&, gameplay::User&);
+    bool HitScan(const User&, const User&);
 
     // Loop
     void MainServerLoop();
-    gameplay::ActionPacket ReceiveAction();
-    gameplay::ActionPacket ProcessAction(gameplay::ActionPacket&&);
-    bool BroadCastAction();
+    EventPacket ReceiveAction();
+    std::optional<EventPacket> ProcessAction(const EventPacket&);
+    bool BroadCastAction(const std::optional<EventPacket>&);
 
     zmq::context_t context;
     zmq::socket_t publishSocket;

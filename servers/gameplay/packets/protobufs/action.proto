@@ -13,6 +13,6 @@ message EventPacket {
     ActionType type = 2;
 
     // PlayStatus
-    float radius = 3;
+    float radius = 3; // To process angle
     float send_time = 4;
 }

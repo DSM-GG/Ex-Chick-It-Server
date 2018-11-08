@@ -3,45 +3,47 @@
 #include <core/gameplayserver.h>
 #include <packets/action.pb.h>
 
-using gameplay::ActionPacket;
+using gameplay::EventPacket;
+
+void GamePlayServer::InitializeSockets(const uint16_t&& port) {
+    publishSocket.bind("tcp://*:" + port);
+    pullSocket.bind("tcp://*:" + port);
+}
 
 void GamePlayServer::StartServer() {
-    gameplay::ActionPacket packet;
-
     MainServerLoop();
 }
 
 void GamePlayServer::MainServerLoop() {
     while (true) {
 
-        message.size();
+        auto actionPacket = ReceiveAction();
 
-        // PROCESS
+        auto processedPacket = ProcessAction(actionPacket);
 
-        // PUB
-//        zmq::message_t publishMessage(gameplay::ActionPacket::ByteSize());
-//        publishMessage.
-
-        publishSocket.send(message);
+        BroadCastAction(processedPacket);
     }
 }
 
-ActionPacket GamePlayServer::ReceiveAction() {
+EventPacket GamePlayServer::ReceiveAction() {
     zmq::message_t message;
     pullSocket.recv(&message);
 
-    ActionPacket actionPacket;
-    actionPacket.ParseFromArray(message.data(), message.size());
+    EventPacket eventPacket;
+    eventPacket.ParseFromArray(message.data(), message.size());
 
-    return actionPacket;
+    return eventPacket;
 }
 
-ActionPacket GamePlayServer::ProcessAction(gameplay::ActionPacket&& actionPacket) {
-    if (actionPacket.is_move()) {
-        // Process Move
-    } else if (actionPacket.is_attack()) {
-        // Process Attack
-    } else {
-        // Wrong input
+std::optional<EventPacket> GamePlayServer::ProcessAction(const EventPacket& actionPacket) {
+    switch(actionPacket.type()) {
+        case EventPacket::ATTACK:
+            break;
+
+        case EventPacket::MOVE:
+            std::optional<EventPacket> movePacket;// { actionPacket };
+            return movePacket;
     }
+    std::optional<EventPacket> wrongEmptyPacket;
+    return wrongEmptyPacket;
 }
