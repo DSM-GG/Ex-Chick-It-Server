@@ -1,4 +1,4 @@
 language: cpp
 
 script:
-  - cmake --build . --target LoginServer -- -j 4
+  - cmake --build . --target GamePlayServer -- -j 4
