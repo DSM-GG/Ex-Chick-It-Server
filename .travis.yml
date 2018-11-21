@@ -1,4 +1,17 @@
 language: cpp
 
-script:
-  - cmake --build . --target GamePlayServer -- -j 4
+matrix:
+  include:
+  - os: linux
+    dist: xenial
+    sudo: required
+    services: docker
+    script:
+    - sh scripts/travis_build.sh
+
+  # Test OS X 10.12 + Xcode 9 + clang
+  - os: osx
+    osx_image: xcode9
+    compiler: clang
+    script:
+    - sh scripts/travis_build.sh

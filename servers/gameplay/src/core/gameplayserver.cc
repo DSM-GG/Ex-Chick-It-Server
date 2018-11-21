@@ -7,7 +7,7 @@ using gameplay::EventPacket;
 
 void GamePlayServer::InitializeSockets(const uint16_t&& port) {
     publishSocket.bind("tcp://*:" + port);
-    pullSocket.bind("tcp://*:" + port);
+    pullSocket.bind("tcp://*:" + port+1);
 }
 
 void GamePlayServer::StartServer() {
@@ -16,11 +16,14 @@ void GamePlayServer::StartServer() {
 
 void GamePlayServer::MainServerLoop() {
     while (true) {
+        std::clog << "Test";
 
         auto actionPacket = ReceiveAction();
 
+        std::clog << "Test";
         auto processedPacket = ProcessAction(actionPacket);
 
+        std::clog << "Test";
         BroadCastAction(processedPacket);
     }
 }
@@ -41,9 +44,19 @@ std::optional<EventPacket> GamePlayServer::ProcessAction(const EventPacket& acti
             break;
 
         case EventPacket::MOVE:
-            std::optional<EventPacket> movePacket;// { actionPacket };
+            std::optional<EventPacket> movePacket; // { actionPacket };
+//            CheckCanMove(const User&);/
             return movePacket;
     }
-    std::optional<EventPacket> wrongEmptyPacket;
-    return wrongEmptyPacket;
+
+    return std::nullopt;
+}
+
+
+bool GamePlayServer::BroadCastAction(const std::optional<EventPacket> &eventPacket) {
+    if (eventPacket.has_value()) {
+        zmq::message_t message { (size_t) eventPacket.value().ByteSize() };
+        eventPacket.value().SerializeToArray(message.data(), message.size());
+        return publishSocket.send(message);
+    }
 }

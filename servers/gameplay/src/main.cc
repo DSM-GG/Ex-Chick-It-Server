@@ -6,11 +6,9 @@
 #include <thread>
 
 #include "core/gameplayserver.h"
-#include <base64.h>
-#include "core/gameplayserver.h"
 
 int main() {
-    LogicServer server(4000);
+    GamePlayServer server(40000);
 
     server.StartServer();
 

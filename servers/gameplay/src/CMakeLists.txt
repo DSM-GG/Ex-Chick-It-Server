@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.10)
 project(GamePlayServer)
 
 set(CMAKE_CXX_STANDARD 17)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(Threads REQUIRED)
 
@@ -18,4 +17,6 @@ add_executable(GamePlayServer
         ${SOURCE_LIST})
 
 target_link_libraries(GamePlayServer
+        zmq
+        protobuf
         ${CMAKE_THREAD_LIBS_INIT})

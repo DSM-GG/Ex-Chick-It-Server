@@ -50,7 +50,7 @@ class GamePlayServer {
 
     zmq::context_t context;
     zmq::socket_t publishSocket;
-    zmq::socket_t pullSocket
+    zmq::socket_t pullSocket;
 };
 
 
